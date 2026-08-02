@@ -16,11 +16,15 @@ body {
     align-items: center;
 
     min-height: 100vh;
+    min-height: 100dvh; /* Better support for mobile browsers */
 
     background-image: url("miffy background.png");
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
+    background-attachment: scroll;
+
+    padding: 20px;
 }
 
 
@@ -160,19 +164,9 @@ body {
     background: rgba(210, 143, 86, 0.8);
 }
 
-
-/* =========================
-   TODO CONTAINER
-   ========================= */
-
 .todos-container {
     width: 100%;
 }
-
-
-/* =========================
-   TASK LIST
-   ========================= */
 
 #task-list {
     width: 100%;
@@ -207,11 +201,6 @@ body {
 #task-list li:hover {
     box-shadow: 0 0 10px rgba(95, 49, 5, 0.788);
 }
-
-
-/* =========================
-   CHECKBOX
-   ========================= */
 
 #task-list li .checkbox {
     width: 20px;
@@ -249,11 +238,6 @@ body {
 
     font-weight: bold;
 }
-
-
-/* =========================
-   TASK TEXT
-   ========================= */
 
 #task-list li span {
     flex: 1;
@@ -317,11 +301,6 @@ body {
     background: rgba(65, 32, 1, 0.827);
 }
 
-
-/* =========================
-   EMPTY STATE
-   ========================= */
-
 .empty-state {
     display: flex;
 
@@ -335,7 +314,6 @@ body {
     flex-wrap: nowrap;
 }
 
-
 .empty-state p {
     font-size: 1.2rem;
     font-weight: 500;
@@ -344,7 +322,6 @@ body {
     text-align: left;
     max-width: 150px;
 }
-
 
 .empty-image {
     width: 100px;
@@ -374,6 +351,13 @@ body {
 }
 
 @media (max-width: 600px){
+    body {
+        background-image: url("miffy background mobile.png");
+        background-size: cover;
+        background-position: center;
+        padding: 15px;
+    }
+
     .container{
         margin: 0 20px;
         padding: 0 10px;
