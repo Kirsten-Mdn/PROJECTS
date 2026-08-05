@@ -1,214 +1,679 @@
-document.addEventListener("DOMContentLoaded", () => {
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
-    const taskInput = document.getElementById('task-input');
-    const addTaskBtn = document.getElementById('add-task-btn');
-    const taskList = document.getElementById('task-list');
-    const emptyState = document.querySelector('.empty-state');
-    const todosContainer = document.querySelector('.todos-container');
-    const progressBar = document.getElementById('progress');
-    const progressNumber = document.getElementById('numbers');
 
-    let hasCelebrated = false;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    const toggleEmptyState = () => {
 
-        if (taskList.children.length === 0) {
-            emptyState.style.display = 'flex';
-        } else {
-            emptyState.style.display = 'none';
-        }
+body {
+    font-family: "Quicksand", sans-serif;
 
-        todosContainer.style.width =
-            taskList.children.length > 0 ? '100%' : '50%';
-    };
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    const updateProgress = () => {
+    min-height: 100vh;
+    min-height: 100dvh; /* Better support for mobile browsers */
 
-        const totalTasks = taskList.children.length;
-        const completedTasks =
-            taskList.querySelectorAll('.checkbox:checked').length;
+    background-image: url("Miffy.gif");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
 
-        progressBar.style.width = totalTasks
-            ? `${(completedTasks / totalTasks) * 100}%`
-            : '0%';
+    padding: 20px;
+}
 
-        progressNumber.textContent =
-            `${completedTasks} / ${totalTasks}`;
 
-        if (
-            totalTasks > 0 &&
-            completedTasks === totalTasks &&
-            !hasCelebrated
-        ) {
-            hasCelebrated = true;
-            Confetti();
-        }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        if (completedTasks !== totalTasks) {
-            hasCelebrated = false;
-        }
-    };
+    width: 100%;
+    height: 100%;
 
-    const saveTasktoLocalStorage = () => {
+    padding: 0 20px;
+}
 
-        const tasks = Array.from(taskList.querySelectorAll('li')).map(li => ({
-            text: li.querySelector('span').textContent,
-            completed: li.querySelector('.checkbox').checked
-        }));
 
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    };
+.todo-app {
+    width: 100%;
+    max-width: 400px;
 
-    const loadTasksfromLocalStorage = () => {
+    padding: 2rem;
 
-        const savedTasks =
-            JSON.parse(localStorage.getItem('tasks')) || [];
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        savedTasks.forEach(({ text, completed }) => {
-            addTask(text, completed);
-        });
+    flex-direction: column;
 
-        toggleEmptyState();
-        updateProgress();
-    };
+    gap: 40px;
 
-    const addTask = (text, completed = false) => {
+    color: rgba(126, 40, 40, 0.729);
 
-        const taskText = text || taskInput.value.trim();
+    border-radius: 20px;
 
-        if (!taskText) {
-            return;
-        }
+    box-shadow: 0 0 100px rgba(95, 49, 5, 0.788);
 
-        const li = document.createElement('li');
+    border: 3px solid rgba(255, 255, 255, 0.18);
 
-        li.innerHTML = `
-            <input type="checkbox" class="checkbox" ${completed ? 'checked' : ''}>
+    backdrop-filter: blur(10px);
+}
 
-            <span>${taskText}</span>
 
-            <div class="task-buttons">
-                <button class="edit-btn">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
+.todo-app h1 {
+    font-size: 2rem;
 
-                <button class="delete-btn">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
-        `;
+    width: 100%;
+}
 
-        const checkbox = li.querySelector('.checkbox');
-        const editBtn = li.querySelector('.edit-btn');
+.calendar{
+    background-color: #C8A27E;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 300px;
+    color: #5b330e;
+    padding: 20px;
+}
 
-        if (completed) {
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
 
-            li.classList.add('completed');
+.btn{
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+}
 
-            editBtn.disabled = true;
-            editBtn.style.opacity = '0.5';
-            editBtn.style.pointerEvents = 'none';
-        }
+#month-year{
+    font-weight: bold;
+    font-size: 20px;
+}
 
-        checkbox.addEventListener('change', () => {
+.weekdays, .days{
+    display: flex;
+    flex-wrap: wrap;
+}
 
-            const isChecked = checkbox.checked;
+.weekdays div{
+    font: "Opinio", sans-serif;
+    width: 14.28%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 5px;
+    font-weight: 600;
+}
 
-            li.classList.toggle('completed', isChecked);
+.days div{
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font: "Opinio", sans-serif;
+    width: 14.28%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 5px;
+    font-weight: 470;
+    position: relative;
+}
 
-            editBtn.disabled = isChecked;
-            editBtn.style.opacity = isChecked ? '0.5' : '1';
-            editBtn.style.pointerEvents = isChecked ? 'none' : 'auto';
+.days div:hover{
+    background-color:#481f01;
+    color: white;
+}
 
-            updateProgress();
-            saveTasktoLocalStorage();
-        });
+.days .today{
+    background-color: #80471c;
+    color: white;
+}
 
-        editBtn.addEventListener('click', () => {
+.days .fade{
+    color: #7f6244;
+}
 
-            if (!checkbox.checked) {
+.days .selected{
+    background: #B87942;
+    color: white;
+    font-weight: bold;
+}
 
-                taskInput.value = li.querySelector('span').textContent;
+.task-marker{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 10px;
+    pointer-events: none;
+}
 
-                li.remove();
+#numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: #c19a6b;
+    border: 2px solid rgba(135, 70, 9, 0.788);
+    font-weight: 650;
+    border-radius: 50%;
+    font-size: 1.5rem;
+}
 
-                toggleEmptyState();
-                updateProgress();
-                saveTasktoLocalStorage();
+#progress-bar {
+    width: 100%;
+    height: 7px;
+    background: rgba(244, 172, 109, 0.8);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 15px;
+}
 
-                taskInput.focus();
-            }
-        });
+#progress {
+    width: 0%;
+    height: 100%;
+    background: #63401a;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
 
-        li.querySelector('.delete-btn').addEventListener('click', () => {
+#progress-percent{
+    margin-top: 8px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #815e40;
+}
 
-            li.remove();
+.input-area {
+    display: flex;
+    align-items: center;
 
-            toggleEmptyState();
-            updateProgress();
-            saveTasktoLocalStorage();
-        });
+    width: 100%;
+}
 
-        taskList.appendChild(li);
 
-        taskInput.value = '';
+.input-area input {
+    flex: 1;
 
-        toggleEmptyState();
-        updateProgress();
-        saveTasktoLocalStorage();
-    };
+    padding: 10px 17px;
 
-    // Add task when button is clicked
-    addTaskBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        addTask();
-    });
+    font-size: 1.1rem;
 
-    taskInput.addEventListener('keydown', (e) => {
+    border: none;
+    outline: none;
 
-        if (e.key === 'Enter') {
+    border-radius: 22px;
 
-            e.preventDefault();
-            addTask();
-        }
-    });
+    background: rgba(210, 143, 86, 0.5);
 
-    loadTasksfromLocalStorage();
+    color: #2b241b;
+}
 
-    toggleEmptyState();
-    updateProgress();
 
-});
+.input-area input::placeholder {
+    color: #2c2c2c;
+}
 
-const Confetti = () => {
 
-    const defaults = {
-        spread: 360,
-        ticks: 50,
-        gravity: 0,
-        decay: 0.94,
-        startVelocity: 30,
-        colors: ['#FFE400', '#FFBD00', '#E89400', '#FFCA6C', '#FDFFB8']
-    };
+.input-area button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    function shoot() {
+    margin-left: 10px;
 
-        confetti({
-            ...defaults,
-            particleCount: 40,
-            scalar: 1.2,
-            shapes: ['star']
-        });
+    padding: 8px;
 
-        confetti({
-            ...defaults,
-            particleCount: 10,
-            scalar: 0.75,
-            shapes: ['circle']
-        });
+    border-radius: 50%;
+
+    color: aliceblue;
+
+    font-size: 1.1rem;
+
+    background: rgba(210, 143, 86, 0.5);
+
+    border: 2px solid rgba(255, 255, 255, 0.18);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.input-area button:hover {
+    transform: scale(1.1);
+
+    background: rgba(210, 143, 86, 0.8);
+}
+
+.todos-container {
+    width: 100%;
+}
+
+#task-list {
+    width: 100%;
+}
+
+
+#task-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    background: rgba(210, 143, 86, 0.5);
+
+    margin-bottom: 10px;
+
+    padding: 8px 10px;
+
+    border-radius: 30px;
+
+    font-size: 1.2rem;
+
+    color: #2c2c2c;
+
+    position: relative;
+
+    transition: box-shadow 0.2s ease;
+}
+
+
+#task-list li:hover {
+    box-shadow: 0 0 10px rgba(95, 49, 5, 0.788);
+}
+
+#task-list li .checkbox {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid rgba(95, 49, 5, 0.788);
+
+    background: transparent;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    appearance: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+
+#task-list li .checkbox:checked {
+    background: #b78044;
+}
+
+
+#task-list li .checkbox:checked::before {
+    content: "\2713";
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+#task-list li span {
+    flex: 1;
+
+    margin-left: 5px;
+
+    word-wrap: break-word;
+}
+
+#task-list li.completed span {
+    text-decoration: 2px line-through #331100;
+    color: #1a0707;
+}
+
+.task-buttons {
+    display: flex;
+
+    gap: 5px;
+
+    margin-left: auto;
+}
+
+
+.task-buttons button {
+    background: rgba(149, 80, 20, 0.5);
+
+    border: none;
+
+    border-radius: 50%;
+
+    width: 18px;
+    height: 18px;
+
+    color: #fff;
+
+    font-size: 0.7rem;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+}
+
+
+.task-buttons button:hover {
+    transform: scale(1.2);
+}
+
+
+.task-buttons .edit-btn {
+    background: rgba(180, 107, 34, 0.827);
+}
+
+
+.task-buttons .delete-btn {
+    background: rgba(65, 32, 1, 0.827);
+}
+
+.empty-state {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    flex-wrap: nowrap;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #7e2828;
+    margin: 0;
+    text-align: left;
+    max-width: 150px;
+}
+
+.empty-image {
+    width: 100px;
+
+    height: auto;
+
+    flex-shrink: 0;
+}
+
+.stat-container{
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.details{
+    width: 100%;
+}
+
+.details h3{
+    color: #815e40;
+}
+
+.watch{
+    position: absolute;
+
+    top: 40px;
+    left: 40px;
+
+    color: #4b2d18;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 100;
+}
+
+#time:hover{
+    transform: scale(1.03);
+}
+
+#time{
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 0 20px #b3794d;
+    color: #4b2d18;
+    transition: transform 0.3s ease;
+}
+
+#date{
+    font-size: 22px;
+    margin-top: 10px;
+    font-weight: 650;
+    margin-bottom: 15px;
+}
+
+body{
+    position: relative;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.music-container{
+    background-color: #F6E7D8;
+    border-radius: 15px;
+    border: 2px solid #D7BFA9;
+    box-shadow: 0 8px 18px rgba(95, 49, 5, 0.18);
+    color: #4B2D18;
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    width: 320px;
+    height: 95px;
+    overflow: visible;
+    padding: 20px 30px;
+    margin: 100px 0;
+    z-index: 10;
+    display: flex;
+}
+
+.img-container{
+    width: 110px;
+    position: relative;
+}
+
+.img-container img{
+    position: absolute;
+    top: -63px;
+    left: 0;
+    width: 105px;
+    height: 105px;
+    object-fit: cover;
+    border-radius: 50%;
+    animation: rotate 10s linear infinite;
+    animation-play-state: paused;
+}
+
+.music-container.play .img-container img{
+   animation-play-state: running;
+}
+
+@keyframes rotate{
+    from{
+        transform: rotate(0deg);
     }
 
-    shoot();
-    setTimeout(shoot, 100);
-    setTimeout(shoot, 200);
-};
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.img-container::after{
+    content:'';
+    background-color: #F6E7D8;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    left: 39%;
+    bottom: 94%;
+    border-radius: 50%;
+    transform: translate(-2%, -2%);
+}
+
+.navigation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    gap: 25px;
+    margin-left: auto;
+}
+
+.action-btn{
+    background-color: #F6E7D8;
+    border: 0;
+    color: #cbaf91;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 3px;
+    margin: none;
+    transition: transform .2s ease, color .2s ease;
+}
+
+.action-btn-big{
+    color: #8a7864;
+    font-size: 25px;
+    transition: transform .2s ease, color .2s ease;
+}
+
+.action-btn:focus{
+    outline: none;
+}
+
+.action-btn:hover,
+.action-btn-big:hover{
+    transform: scale(1.15);
+    color: #7A5C43;
+}
+
+.music-info{
+    background-color: rgba(233, 205, 179, 0.8);
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: calc(100% - 40px);
+    opacity: 0;
+    transform: translateY(0%);
+}
+
+.music-container.play .music-info{
+    opacity: 1;
+    transform: translateY(calc(-100% - 2px));   
+    transition: transform 0.3s ease-in opacity 0.3s ease-in;
+    padding: 21px 10px 10px 120px;
+}
+
+.music-info h4{
+    margin:none;
+}
+
+.progress-container{
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 4px;
+    background-color: #ecc192;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    height: 2.5px;
+    width: 90%;
+}
+
+.progress{
+    background-color:#c78c4d;
+    border-radius: 5px;
+    height: 100%;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+@media (max-width: 600px){
+    body {
+        background-image: url("Miffy Mobile.gif");
+        background-size: cover;
+        background-position: center;
+        padding: 15px;
+    }
+
+    .container{
+        margin: 0 20px;
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    .todo-app{
+        padding: 1.5rem;
+        gap: 20px;
+    }
+
+    #numbers {
+        width: 60px;
+        height: 60px;
+        font-size: 1rem;
+    }
+
+    .input-area input{
+        font-size: 1rem;
+    }
+
+    #task-list li {
+    font-size: 1rem;
+    }
+
+    .watch{
+    position: static;
+    width: 100%;
+    margin-bottom: 25px;
+   }
+
+   .calendar{
+    width:100%;
+   }
+
+   #time{
+    font-size:48px;
+   }
+
+   #date{
+    font-size:18px;
+   }
+
+   .stat-container{
+    width:100%;
+   }
+}
