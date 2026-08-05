@@ -593,7 +593,7 @@ body{
 .music-container.play .music-info{
     opacity: 1;
     transform: translateY(calc(-100% - 2px));   
-    transition: transform 0.3s ease-in opacity 0.3s ease-in;
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
     padding: 21px 10px 10px 120px;
 }
 
