@@ -639,6 +639,7 @@ body{
     .todo-app{
         padding: 1.5rem;
         gap: 20px;
+        max-width: 400px;
     }
 
     #numbers {
@@ -658,22 +659,74 @@ body{
     .watch{
     position: static;
     width: 100%;
+    max-width: 400px;
     margin-bottom: 25px;
-   }
+    display: flex;
+    flex-direction: column;
+}
 
    .calendar{
-    width:100%;
-   }
+    width: 100%;
+    max-width: 400px;
+    }
 
    #time{
-    font-size:48px;
-   }
+    font-size: 42px;
+    text-align: center;
+    }
 
-   #date{
-    font-size:18px;
-   }
+    #date{
+    font-size: 18px;
+    text-align: center;
+    }
 
    .stat-container{
     width:100%;
    }
+
+   .music-container{
+    position: static;
+    width: 100%;
+    max-width: 400px;
+    height: 90px;
+    margin: 25px auto 0;
+    top: auto;
+    right: auto;
+    padding: 20px;
+    }
+
+    .img-container img{
+    width: 80px;
+    height: 80px;
+    top: -42px;
+    }
+
+    .img-container::after{
+    width: 16px;
+    height: 16px;
+    left: 30px;
+    bottom: 62px;
+    }
+
+    .music-container.play .music-info{
+    padding: 16px 10px 10px 90px;
+    width: calc(100% - 20px);
+    left: 10px;
+    }
+
+    .navigation{
+    gap: 14px;
+    }
+
+    .action-btn{
+    font-size: 13px;
+    }  
+
+    .action-btn-big{
+    font-size: 22px;
+    }
+
+    .progress-container{
+    width: calc(100% - 40px);
+    }
 }
