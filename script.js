@@ -68,7 +68,7 @@ const songs = [
         artist: "massobeats"
     },
     {
-        title: "honey Jam",
+        title: "honey jam",
         artist: "massobeats"
     },
     {
