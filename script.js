@@ -89,7 +89,7 @@ const songs = [
     }
 ];
 
-let songIndex = 8;
+let songIndex = 0;
 
 loadSong(songs[songIndex]);
 
