@@ -627,14 +627,22 @@ body{
     body{
         display: block;
         min-height: auto;
-        padding: 20px 15px;
+        padding: 12px;
         overflow-y: auto;
-
         background-image: url("Miffy Mobile.gif");
-        background-size: cover;
-        background-position: center;
+        background-size: contain;
+        background-position: center bottom;
         background-repeat: no-repeat;
         background-attachment: scroll;
+        background-color: #f8ead8;
+    }
+
+    .todo-app,
+    .calendar,
+    .stat-container,
+    .music-container{
+    backdrop-filter: blur(8px);
+    background: rgba(246,231,216,0.72);
     }
 
     .watch{
@@ -644,6 +652,7 @@ body{
         margin: 0 auto 20px;
         display: flex;
         flex-direction: column;
+        margin-bottom: 15px;
     }
 
     .container{
@@ -652,17 +661,23 @@ body{
         padding: 0;
         display: flex;
         justify-content: center;
+        margin-bottom: 15px;
     }
 
     .todo-app{
         width: 100%;
         max-width: 400px;
-        padding: 1.5rem;
-        gap: 20px;
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .todo-app h1{
+    font-size: 2rem;
     }
 
     .calendar{
         width: 100%;
+        padding: 15px;
     }
 
     #time{
@@ -701,8 +716,8 @@ body{
     .music-container{
         position: relative;
         width: 100%;
-        max-width: 400px;
-        height: 100px;
+        max-width: 340px;
+        height: 85px;
         margin: 20px auto;
         padding: 20px;
     }
@@ -754,5 +769,18 @@ body{
     right: 20px;
     bottom: 4px;
     width: auto;
+    }
+
+    .empty-state{
+    gap: 15px;
+    }  
+
+    .empty-state p{
+    font-size: 1rem;
+    max-width: 120px;
+    }
+
+    .empty-image{
+    width: 70px;
     }
 }
