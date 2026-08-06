@@ -1,84 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 
-body {
-    font-family: "Quicksand", sans-serif;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100vh;
-    min-height: 100dvh; /* Better support for mobile browsers */
-
-    background-image: url("Miffy.gif");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-
-    padding: 20px;
-}
 
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-    height: 100%;
-
-    padding: 0 20px;
-}
 
 
-.todo-app {
-    width: 100%;
-    max-width: 400px;
-
-    padding: 2rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: column;
-
-    gap: 40px;
-
-    color: rgba(126, 40, 40, 0.729);
-
-    border-radius: 20px;
-
-    box-shadow: 0 0 100px rgba(95, 49, 5, 0.788);
-
-    border: 3px solid rgba(255, 255, 255, 0.18);
-
-    backdrop-filter: blur(10px);
-}
-
-
-.todo-app h1 {
-    font-size: 2rem;
-
-    width: 100%;
-}
-
-.calendar{
-    background-color: #C8A27E;
-    border-radius: 15px;
-    overflow: hidden;
-    width: 300px;
-    color: #5b330e;
-    padding: 20px;
 }
 
 .header{
@@ -637,94 +564,6 @@ body{
     }
 
     .todo-app{
-        padding: 1.5rem;
-        gap: 20px;
-        max-width: 400px;
-    }
-
-    #numbers {
-        width: 60px;
-        height: 60px;
-        font-size: 1rem;
-    }
-
-    .input-area input{
-        font-size: 1rem;
-    }
-
-    #task-list li {
-    font-size: 1rem;
-    }
-
-    .watch{
-    position: static;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-}
-
-   .calendar{
-    width: 100%;
-    max-width: 400px;
-    }
-
-   #time{
-    font-size: 42px;
-    text-align: center;
-    }
-
-    #date{
-    font-size: 18px;
-    text-align: center;
-    }
-
-   .stat-container{
-    width:100%;
-   }
-
-   .music-container{
-    position: static;
-    width: 100%;
-    max-width: 400px;
-    height: 90px;
-    margin: 25px auto 0;
-    top: auto;
-    right: auto;
-    padding: 20px;
-    }
-
-    .img-container img{
-    width: 80px;
-    height: 80px;
-    top: -42px;
-    }
-
-    .img-container::after{
-    width: 16px;
-    height: 16px;
-    left: 30px;
-    bottom: 62px;
-    }
-
-    .music-container.play .music-info{
-    padding: 16px 10px 10px 90px;
-    width: calc(100% - 20px);
-    left: 10px;
-    }
-
-    .navigation{
-    gap: 14px;
-    }
-
-    .action-btn{
-    font-size: 13px;
-    }  
-
-    .action-btn-big{
-    font-size: 22px;
-    }
 
     .progress-container{
     width: calc(100% - 40px);
