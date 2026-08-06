@@ -699,25 +699,35 @@ body{
     }
 
     .music-container{
-        position: static;
+        position: relative;
         width: 100%;
         max-width: 400px;
-        height: 90px;
+        height: 100px;
         margin: 20px auto;
         padding: 20px;
     }
 
-    .img-container img{
+    .img-container{
         width: 80px;
-        height: 80px;
-        top: -42px;
+        position: relative;
+    }
+
+    .img-container img{
+        width:80px;
+        height:80px;
+        top:-35px;
     }
 
     .img-container::after{
+        content: "";
         width: 16px;
         height: 16px;
-        left: 30px;
-        bottom: 62px;
+        background: #F6E7D8;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: -3px;
+        transform: translateX(-50%);
     }
 
     .music-container.play .music-info{
@@ -739,7 +749,10 @@ body{
     }
 
     .progress-container{
-        width: calc(100% - 40px);
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 4px;
+    width: auto;
     }
-
 }
